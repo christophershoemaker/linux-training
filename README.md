@@ -17,6 +17,10 @@ Logstash similar to the omelasticsearch plugin automaticly creates indices in el
 
 `sudo rsyslogd -dn #Run rsyslog daemon in frontend and in debug mode`
 
+`journalctl # Shows all the logs`
+
+`logger -p kern.notice "Testing Log Entry" # Create kern.notice log with a speciied message. It shows in journalctl`
+
 `sudo tcpdump -s 10240 -A -i any -p -n -s 1500 "tcp port 9200" # Debug issues between rsyslog and elasticsearch`
 
 `curl 'localhost:9200/_cat/indices?v' # Show indices in elasticsearch`
@@ -33,6 +37,12 @@ For some, the ability to delete all your data with a single command is a very sc
 ## Usefull links
 
 [`https://sematext.com/blog/2013/07/01/recipe-rsyslog-elasticsearch-kibana/`](https://sematext.com/blog/2013/07/01/recipe-rsyslog-elasticsearch-kibana/)
+
+[`https://www.digitalocean.com/community/tutorials/how-to-centralize-logs-with-rsyslog-logstash-and-elasticsearch-on-ubuntu-14-04`](https://www.digitalocean.com/community/tutorials/how-to-centralize-logs-with-rsyslog-logstash-and-elasticsearch-on-ubuntu-14-04)
+
+[`https://timothy-quinn.com/running-the-elk-stack-on-centos-7-and-using-beats/`](https://timothy-quinn.com/running-the-elk-stack-on-centos-7-and-using-beats/)
+
+[`https://medium.com/@thomasdecaux/exploit-nginx-access-log-with-rsyslog-logstash-elasticsearch-and-kibana-48ab5c71b42d#.fkw43l1gu`](https://medium.com/@thomasdecaux/exploit-nginx-access-log-with-rsyslog-logstash-elasticsearch-and-kibana-48ab5c71b42d#.fkw43l1gu)
 
 ## Good articles and their sources explaining how does the logging work in linux:
 

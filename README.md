@@ -40,7 +40,8 @@ For some, the ability to delete all your data with a single command is a very sc
 
 The old way how logging on linux was working:
 
-```Simplified, it goes more or less like this:
+```
+Simplified, it goes more or less like this:
 
 The kernel logs messages (using the printk() function) to a ring buffer in kernel space. These messages are made available to user-space applications in two ways: via the /proc/kmsg file (provided that /proc is mounted), and via the sys_syslog syscall.
 
@@ -62,7 +63,8 @@ On *BSD there is no klogd(8), and /proc either doesn't exist (on OpenBSD) or is 
 
 How nowadays does the logging work on linux:
 
-```The other answer explains, as its author says, "classic logging" in Linux. That's not how things work in a lot of systems nowadays.
+```
+The other answer explains, as its author says, "classic logging" in Linux. That's not how things work in a lot of systems nowadays.
 The kernel
 
 The kernel mechanisms have changed.
@@ -132,7 +134,8 @@ These are now required to be systemd-specific. On a systemd system they don't ge
 ```
 ### [http://unix.stackexchange.com/questions/198178/what-are-the-concepts-of-kernel-ring-buffer-user-level-log-level](http://unix.stackexchange.com/questions/198178/what-are-the-concepts-of-kernel-ring-buffer-user-level-log-level)
 
-```Yes, all of this has to do with logging. No, none of it has to do with runlevel or "protection ring".
+```
+Yes, all of this has to do with logging. No, none of it has to do with runlevel or "protection ring".
 
 The kernel keeps its logs in a ring buffer. The main reason for this is so that the logs from the system startup get saved until the syslog daemon gets a chance to start up and collect them. Otherwise there would be no record of any logs prior to the startup of the syslog daemon. The contents of that ring buffer can be seen at any time using the dmesg command, and its contents are also saved to /var/log/dmesg just as the syslog daemon is starting up.
 

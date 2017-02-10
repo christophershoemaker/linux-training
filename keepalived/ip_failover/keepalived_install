@@ -1,0 +1,12 @@
+#History
+
+sudo yum install epel-release -y
+sudo yum install nginx keepalived -y
+sudo vi /etc/keepalived/keepalived.conf
+sudo vi /usr/share/nginx/html/index.html
+#sudo vi /proc/sys/net/ipv4/ip_nonlocal_bind
+sudo vi /etc/sysctl.conf #net.ipv4.ip_nonlocal_bind = 1
+sudo sysctl -p #Reload config
+sudo service keepalived start & sudo service nginx start
+sudo service keepalived status & sudo service nginx status
+sudo journalctl

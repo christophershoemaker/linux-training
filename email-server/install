@@ -1,0 +1,117 @@
+---------------------------------------------
+DNS part: 
+---------------------------------------------
+Entry in DNS: mx record point to email server
+---------------------------------------------
+HOSTNAME part:
+---------------------------------------------
+sudo vim /etc/hosts
+ping oehs.ml
+ping oehs
+hostname -f
+ping oehs
+sudo vi /etc/hosts
+hostname -f
+sudo hostnamectl set-hostname oehs
+hostname -f
+---------------------------------------------
+NGINX part:
+---------------------------------------------
+sudo yum install epel-release nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
+nginx -t
+sudo systemctl status nginx
+sudo yum install tcpdump
+sudo tcpdump -i any -p -n -s 1500 "tcp port 80"
+---------------------------------------------
+Generate Let's encrypt free SSL certificates:
+---------------------------------------------
+sudo yum install certbot
+vi /etc/nginx/nginx.conf
+ls -l /usr/share/nginx/html
+sudo certbot certonly --webroot -w /usr/share/nginx/html -d oehs.ml.com -d www.oehs.ml
+sudo vi /var/log/letsencrypt/letsencrypt.log
+sudo ls /etc/letsencrypt/live/oehs.ml/
+sudo vi /etc/letsencrypt/live/oehs.ml/fullchain.pem
+---------------------------------------------
+MYSQL part:
+---------------------------------------------
+sudo vi /etc/yum.repos.d/mysql-community.repo
+yum repolist all | grep mysql
+yum repolist enabled | grep mysql
+sudo yum --enablerepo=centosplus install postfix dovecot dovecot-mysql mailx mysql-community-server telnet
+sudo yum update
+sudo yum makecache clean
+mysqladmin -p create servermail
+sudo grep 'temporary password' /var/log/mysqld.log
+sudo mysql_secure_installation
+sudo systemctl start mysqld
+sudo systemctl status mysqld
+mysqladmin -p create servermail
+mysqladmin -u root -p create servermail
+mysql -u root -p
+mysql -u root -p
+GRANT SELECT ON servermail.* TO 'usermail'@'127.0.0.1' IDENTIFIED BY 'mailpassword';
+mysql -h 127.0.0.1 -u usermail -p
+---------------------------------------------
+POSTFIX part:
+---------------------------------------------
+sudo vi /etc/postfix/mysql-virtual-mailbox-domains.cf
+postmap -q oehs.ml mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
+sudo vi /etc/postfix/mysql-virtual-mailbox-maps.cf
+postmap -q email1@oehs.ml mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
+sudo vi /etc/postfix/mysql-virtual-alias-maps.cf
+postmap -q alias@oehs.ml mysql:/etc/postfix/mysql-virtual-alias-maps.cf
+sudo vi /etc/postfix/master.cf
+sudo vi /etc/postfix/main.cf 
+sudo service postfix restart
+sudo service postfix status
+sudo netstat -tunap
+sudo journalctl
+---------------------------------------------
+DOVECOT part: 
+---------------------------------------------
+cat /etc/passwd | grep vmail
+cat /etc/group | grep vmail
+sudo mkdir -p /var/mail/vhosts/oehs.ml
+sudo groupadd -g 5000 vmail
+sudo useradd -g vmail -u 5000 vmail -d /var/mail
+sudo vi /etc/dovecot/conf.d/10-auth.conf
+sudo vi /etc/dovecot/conf.d/auth-sql.conf.ext
+sudo vi /etc/dovecot/conf.d/10-master.conf
+sudo vi /etc/dovecot/conf.d/10-ssl.conf
+sudo vi /etc/dovecot/dovecot-sql.conf.ext
+sudo vi /etc/dovecot/dovecot.conf
+sudo chown -R vmail:dovecot /etc/dovecot
+sudo chmod -R o-rwx /etc/dovecot
+sudo service dovecot restart
+sudo service dovecot status
+sudo netstat -tunap 
+telnet oehs.ml 993
+ehlo localhost
+mailx alias@oehs.ml
+mailx email1@oehs.ml # Send an email to email1@oehs.ml
+ls -l /var/mail/vhosts/oehs.ml/email1
+sudo chown -R vmail:vmail /var/mail
+sudo chown -R vmail:vmail /var/spool/mail/    
+sudo mailx email1@oehs.ml
+sudo ls -l /var/mail/vhosts/oehs.ml/email1/
+---------------------------------------------
+GENERA part:
+---------------------------------------------
+Check whether services is listening
+sudo netstat -tunap | grep 25
+sudo netstat -tunap | grep 110
+sudo netstat -tunap | grep 587
+sudo netstat -tunap | grep 993
+sudo netstat -tunap | grep 995
+
+sudo tail -f /var/log/maillog
+
+sudo adduser demo
+sudo visudo # Add "demo    ALL=(ALL)       ALL"
+reload ssh
+su - demo
+sudo passwd demo
+---------------------------------------------

@@ -1,0 +1,32 @@
+@       IN      SOA     ns.gloster.com. first.gloster.com.        (
+
+                2014032107
+                604800
+                86400
+                2419200
+                604800 )
+@       IN      NS      ns.gloster.com.
+
+@       IN      A       10.1.1.100
+
+first   IN      A       172.0.2.1
+first   IN      AAAA    2001:db8:2::1
+
+second  IN      A       172.0.2.2
+second  IN      AAAA    2001:db8:2::2
+
+third   IN      A       172.0.2.3
+third   IN      AAAA    2001:db8:2::3
+
+fourth  IN      A       172.0.2.4
+fourth  IN      AAAA    2001:db8:2::4
+
+ns      IN      A       10.1.1.100
+ns      IN      AAAA    ::1
+
+*       IN      A       172.0.2.10
+
+www     IN      CNAME   firstgl
+ftp     IN      CNAME   secondgl
+mail    IN      CNAME   thirdgl
+dns     IN      CNAME   fourthgl

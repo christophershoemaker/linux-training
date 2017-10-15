@@ -1,0 +1,44 @@
+boxes = {
+  'client' => {
+    'ipaddresslastoctet' => '192.168.44.60',
+    'ram' => '1024',
+    'box' => 'centos/7',
+    'synced_folder' => '.'
+  },
+  'dnsns' => {
+    'ipaddresslastoctet' => '192.168.44.61',
+    'ram' => '1024',
+    'box' => 'centos/7',
+    'synced_folder' => '.'
+  },
+  'dnsforwarder' => {
+    'ipaddresslastoctet' => '192.168.44.62',
+    'ram' => '1024',
+    'box' => 'centos/7',
+    'synced_folder' => '.'
+  },
+  'dns' => {
+    'ipaddresslastoctet' => '192.168.44.63',
+    'ram' => '1024',
+    'box' => 'centos/7',
+    'synced_folder' => '.'
+  }
+}
+
+Vagrant.configure("2") do |config|
+  boxes.each do |key,properties|
+    config.vm.define "#{key}" do |node|
+      node.vm.hostname = "#{key}"
+      node.vm.synced_folder "#{properties['synced_folder']}", "/vagrant", type: "virtualbox"
+      node.vm.box = "#{properties['box']}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--memory", "#{properties['ram']}"]
+        vb.customize ["modifyvm", :id, "--name", "#{key}"]
+        vb.customize ["modifyvm", :id, "--cpus", "1"]
+      end
+      node.vm.network "private_network", 
+        ip: "#{properties['ipaddresslastoctet']}",
+        netmask: "255.255.255.0"
+    end
+  end
+end

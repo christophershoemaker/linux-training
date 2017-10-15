@@ -1,0 +1,32 @@
+@       IN      SOA     ns.nhs.uk. first.nhs.uk.        (
+
+                2014032107
+                604800
+                86400
+                2419200
+                604800 )
+@       IN      NS      ns.nhs.uk.
+
+@       IN      A       10.1.1.10
+
+first   IN      A       192.0.2.1
+first   IN      AAAA    2001:db8:2::1
+
+second  IN      A       192.0.2.2
+second  IN      AAAA    2001:db8:2::2
+
+third   IN      A       192.0.2.3
+third   IN      AAAA    2001:db8:2::3
+
+fourth  IN      A       192.0.2.4
+fourth  IN      AAAA    2001:db8:2::4
+
+ns      IN      A       10.1.1.10
+ns      IN      AAAA    ::1
+
+*       IN      A       192.0.2.10
+
+www     IN      CNAME   first
+ftp     IN      CNAME   second
+mail    IN      CNAME   third
+dns     IN      CNAME   fourth
